@@ -43,9 +43,12 @@ public class LoginServlet extends HttpServlet {
 		//1.接受请求参数
 		String num=request.getParameter("num");
 		String password=request.getParameter("password");
+		
 		//获取session
 		HttpSession session=request.getSession();
 		
+		//判断输入的正确性，null情况是用户未经过提交直接进入
+		//空为用户虽然进行了提交但输入为空
 		if(num==null||"".equals(num.trim())) {
 			session.setAttribute("message", "学号输入有误");
 			response.sendRedirect(request.getContextPath()+"/Login.jsp");
@@ -65,12 +68,14 @@ public class LoginServlet extends HttpServlet {
 		Student student=service.checkUser(num,password);
 		
 		//验证未通过，则跳转登陆页面，让用户再次输入信息，此时页面向用户给出一些提示
+		//最好使用sendRedirect以防止用户恶意输入为程序带来伤害
 		if(student==null) {
 			session.setAttribute("message","学号或密码输入有误");
 			response.sendRedirect(request.getContextPath()+"/Login.jsp");
 			return;
 		}
 		
+		session.setAttribute("student", student);
 		//验证通过，跳转到主页的index.jsp
 		response.sendRedirect(request.getContextPath()+"/index.jsp");
 		
