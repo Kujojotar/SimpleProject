@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class JdbcUtils {
 	
-	//¾²Ì¬´úÂëÓï¾ä¿é£¬Ëæ×ÅÀàµÄ¼ÓÔØ¶ø¼ÓÔØ£¬¶øÇÒÖ»¼ÓÔØÒ»´Î
+	//é™æ€ä»£ç è¯­å¥å—ï¼Œéšç€ç±»çš„åŠ è½½è€ŒåŠ è½½ï¼Œè€Œä¸”åªåŠ è½½ä¸€æ¬¡
     static{
     	try {
     		Class.forName("com.mysql.cj.jdbc.Driver");
@@ -19,20 +19,21 @@ public class JdbcUtils {
     
     private static Connection conn;
     
-    //´¦ÀíÒì³£Ó¦¸ÃÓÉdaoÍê³É£¬ËùÒÔ´Ë´¦²»Ğè´¦ÀíÒì³££¬Ö±½Óthrow³öÈ¥
+    //å¤„ç†å¼‚å¸¸åº”è¯¥ç”±daoå®Œæˆï¼Œæ‰€ä»¥æ­¤å¤„ä¸éœ€å¤„ç†å¼‚å¸¸ï¼Œç›´æ¥throwå‡ºå»
     public static Connection getConnection() throws SQLException {
     	String url="jdbc:mysql://localhost:3307/studentinfo?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     	String user="root";
-    	String password="nie200188888888";
+	//å¯†ç å·²ç»è¿›è¡ŒåŠ å¯†å¤„ç†ï¼Œå˜¿å˜¿å˜¿
+    	String password="***************************";
     	
-    	//µ±Á¬½ÓÎª¿ªÆô»òÕßÁ¬½ÓÖĞ¶ÏÊ±£¬ÖØĞÂ½¨Á¢Á¬½Ó
+    	//å½“è¿æ¥ä¸ºå¼€å¯æˆ–è€…è¿æ¥ä¸­æ–­æ—¶ï¼Œé‡æ–°å»ºç«‹è¿æ¥
     	if(conn==null||conn.isClosed()) {
     		conn=DriverManager.getConnection(url,user,password);
     	}
     	return conn;
     }
     
-    //¹Ø±Õ×ÊÔ´
+    //å…³é—­èµ„æº
     public static void close(Connection conn,Statement stmt,ResultSet rs) throws SQLException{
     	if(conn!=null&&!conn.isClosed()) {
     		conn.close();
